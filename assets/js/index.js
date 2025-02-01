@@ -17,13 +17,12 @@ function initializeItemsPage() {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append('id', document.getElementById('itemId').value);
         formData.append('name', document.getElementById('itemName').value);
         formData.append('cost', document.getElementById('itemCost').value);
         
         const imageFile = document.getElementById('itemImage').files[0];
         if (imageFile) {
-            const resizedImage = await resizeImage(imageFile, 800); // Max 800px breite
+            const resizedImage = await resizeImage(imageFile, 800);
             formData.append('image', resizedImage, imageFile.name);
         }
 
@@ -91,7 +90,6 @@ async function updateTable() {
         const items = await response.json();
         
         const table = document.querySelector('table');
-        // Die Header-Zeile behalten
         const headerRow = table.rows[0];
         table.innerHTML = '';
         table.appendChild(headerRow);
@@ -102,10 +100,62 @@ async function updateTable() {
                 <td>${item.id}</td>
                 <td>${item.name}</td>
                 <td>$${parseFloat(item.cost).toFixed(2)}</td>
+                <td>
+                    <button class="delete-btn" data-id="${item.id}">
+                        Delete
+                    </button>
+                </td>
             `;
             table.appendChild(row);
+        });
+
+        // Event-Listener für Delete-Buttons
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const id = e.target.dataset.id;
+                showDeleteConfirmation(id);
+            });
         });
     } catch (error) {
         console.error('Error updating table:', error);
     }
+}
+
+// Funktion zum Anzeigen des Delete-Modals
+function showDeleteConfirmation(itemId) {
+    const modal = document.getElementById('deleteModal');
+    const confirmBtn = document.getElementById('confirmDelete');
+    const cancelBtn = document.getElementById('cancelDelete');
+
+    modal.style.display = 'block';
+
+    // Event-Listener für Cancel-Button
+    cancelBtn.onclick = function() {
+        modal.style.display = 'none';
+    };
+
+    // Event-Listener für Confirm-Button
+    confirmBtn.onclick = async function() {
+        try {
+            const response = await fetch(`/api/items/${itemId}`, {
+                method: 'DELETE'
+            });
+            
+            if (response.ok) {
+                modal.style.display = 'none';
+                updateTable();
+            } else {
+                console.error('Error deleting item');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    // Schließen des Modals wenn außerhalb geklickt wird
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
 }

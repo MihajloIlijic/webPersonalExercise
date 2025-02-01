@@ -23,3 +23,6 @@ pids
 # Image uploads
 assets/images/uploads/*
 !assets/images/uploads/.gitkeep
+
+# SQLite database
+items.db
