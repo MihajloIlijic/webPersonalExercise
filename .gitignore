@@ -19,3 +19,7 @@ pids
 .vscode/
 *.swp
 *.swo
+
+# Image uploads
+assets/images/uploads/*
+!assets/images/uploads/.gitkeep

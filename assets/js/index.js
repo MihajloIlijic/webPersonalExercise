@@ -10,33 +10,102 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeItemsPage() {
     const itemForm = document.getElementById('itemForm');
     
-    itemForm.addEventListener('submit', function(e) {
-        e.preventDefault(); // Prevent form from submitting normally
+    // Initial table load
+    updateTable();
+    
+    itemForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-        // Get input values
-        const id = document.getElementById('itemId').value;
-        const name = document.getElementById('itemName').value;
-        const cost = document.getElementById('itemCost').value;
+        const formData = new FormData();
+        formData.append('id', document.getElementById('itemId').value);
+        formData.append('name', document.getElementById('itemName').value);
+        formData.append('cost', document.getElementById('itemCost').value);
+        
+        const imageFile = document.getElementById('itemImage').files[0];
+        if (imageFile) {
+            const resizedImage = await resizeImage(imageFile, 800); // Max 800px breite
+            formData.append('image', resizedImage, imageFile.name);
+        }
 
-        // Create new table row
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td>${id}</td>
-            <td>${name}</td>
-            <td>$${parseFloat(cost).toFixed(2)}</td>
-        `;
+        try {
+            const response = await fetch('/api/items', {
+                method: 'POST',
+                body: formData
+            });
 
-        // Add row to table
-        const table = document.querySelector('table');
-        table.appendChild(newRow);
-
-        // Reset form
-        e.target.reset();
+            if (response.ok) {
+                e.target.reset();
+                updateTable();
+            }
+        } catch (error) {
+            console.error('Error adding item:', error);
+        }
     });
 }
 
-function helloWorld() {
-    console.log("Hello World");
+// Funktion zum Verkleinern des Bildes
+async function resizeImage(file, maxWidth) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.src = e.target.result;
+            
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+                
+                // Noch kleinere maximale Größe
+                const maxSize = 250; // Von 400 auf 250 reduziert
+                if (width > maxSize || height > maxSize) {
+                    if (width > height) {
+                        height = Math.round((height * maxSize) / width);
+                        width = maxSize;
+                    } else {
+                        width = Math.round((width * maxSize) / height);
+                        height = maxSize;
+                    }
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                
+                const ctx = canvas.getContext('2d');
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                canvas.toBlob((blob) => {
+                    resolve(blob);
+                }, 'image/jpeg', 0.5); // Qualität auf 50% reduziert
+            };
+        };
+        reader.readAsDataURL(file);
+    });
 }
 
-helloWorld();
+async function updateTable() {
+    try {
+        const response = await fetch('/api/items');
+        const items = await response.json();
+        
+        const table = document.querySelector('table');
+        // Die Header-Zeile behalten
+        const headerRow = table.rows[0];
+        table.innerHTML = '';
+        table.appendChild(headerRow);
+        
+        items.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.id}</td>
+                <td>${item.name}</td>
+                <td>$${parseFloat(item.cost).toFixed(2)}</td>
+            `;
+            table.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error updating table:', error);
+    }
+}

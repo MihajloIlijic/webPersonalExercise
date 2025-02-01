@@ -11,6 +11,7 @@
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/items" class="active">Items Management</a></li>
+            <li><a href="/items-gallery">Items Gallery</a></li>
         </ul>
     </nav>
 
@@ -29,6 +30,10 @@
             <div>
                 <label for="itemCost">Cost ($):</label>
                 <input type="number" step="0.01" id="itemCost" required>
+            </div>
+            <div>
+                <label for="itemImage">Image:</label>
+                <input type="file" id="itemImage" accept="image/*">
             </div>
             <button type="submit">Add Item</button>
         </form>
