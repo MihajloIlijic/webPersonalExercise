@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Items Management</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/items" class="active">Items Management</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Pens Table</h1>
+
+        <form id="itemForm">
+            <div>
+                <label for="itemId">ID:</label>
+                <input type="number" id="itemId" required>
+            </div>
+            <div>
+                <label for="itemName">Name:</label>
+                <input type="text" id="itemName" required>
+            </div>
+            <div>
+                <label for="itemCost">Cost ($):</label>
+                <input type="number" step="0.01" id="itemCost" required>
+            </div>
+            <button type="submit">Add Item</button>
+        </form>
+
+        <table border="1" title="Product Table">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Cost</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Example Item</td>
+                <td>$10.00</td>
+            </tr>
+        </table>
+    </div>
+    
+    <script src="/js/index.js"></script>
+</body>
+</html> 
