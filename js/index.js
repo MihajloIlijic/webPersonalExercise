@@ -1,6 +1,6 @@
-// Check which page we're on
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if we're on the items page
+    
     const itemForm = document.getElementById('itemForm');
     if (itemForm) {
         initializeItemsPage();
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeItemsPage() {
     const itemForm = document.getElementById('itemForm');
     
-    // Initial table load
+   
     updateTable();
     
     itemForm.addEventListener('submit', async (e) => {
@@ -42,7 +42,7 @@ function initializeItemsPage() {
     });
 }
 
-// Funktion zum Verkleinern des Bildes
+
 async function resizeImage(file, maxWidth) {
     return new Promise((resolve) => {
         const reader = new FileReader();
@@ -55,8 +55,8 @@ async function resizeImage(file, maxWidth) {
                 let width = img.width;
                 let height = img.height;
                 
-                // Noch kleinere maximale Größe
-                const maxSize = 250; // Von 400 auf 250 reduziert
+                
+                const maxSize = 250; 
                 if (width > maxSize || height > maxSize) {
                     if (width > height) {
                         height = Math.round((height * maxSize) / width);
@@ -77,7 +77,7 @@ async function resizeImage(file, maxWidth) {
                 
                 canvas.toBlob((blob) => {
                     resolve(blob);
-                }, 'image/jpeg', 0.5); // Qualität auf 50% reduziert
+                }, 'image/jpeg', 0.5); 
             };
         };
         reader.readAsDataURL(file);
@@ -109,7 +109,7 @@ async function updateTable() {
             table.appendChild(row);
         });
 
-        // Event-Listener für Delete-Buttons
+        
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', (e) => {
                 const id = e.target.dataset.id;
