@@ -14,12 +14,12 @@ async function loadItems() {
 
 function displayItems(items) {
     const grid = document.getElementById('itemsGrid');
-    grid.innerHTML = ''; // Clear existing items
+    grid.innerHTML = ''; 
 
     if (items.length === 0) {
         grid.innerHTML = `
             <div class="no-items">
-                <p>No items found. Add some items to see them here!</p>
+                <p>No items found. Add some if you want</p>
             </div>
         `;
         return;
@@ -29,10 +29,10 @@ function displayItems(items) {
         const card = document.createElement('div');
         card.className = 'item-card';
         
-        // Fallback image wenn kein Bild vorhandenc
+        
         const imageSrc = item.image || '/images/default-image.jpg';
         
-        // Formatiere den Preis mit 2 Dezimalstellen und Tausendertrennzeichen
+        
         const formattedPrice = new Intl.NumberFormat('de-DE', {
             style: 'currency',
             currency: 'EUR'
@@ -51,7 +51,7 @@ function displayItems(items) {
             </div>
         `;
 
-        // Füge Hover-Effekte hinzu
+        
         card.addEventListener('mouseenter', () => {
             card.style.transform = 'translateY(-5px)';
         });

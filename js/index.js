@@ -121,7 +121,7 @@ async function updateTable() {
     }
 }
 
-// Funktion zum Anzeigen des Delete-Modals
+
 function showDeleteConfirmation(itemId) {
     const modal = document.getElementById('deleteModal');
     const confirmBtn = document.getElementById('confirmDelete');
@@ -129,12 +129,12 @@ function showDeleteConfirmation(itemId) {
 
     modal.style.display = 'block';
 
-    // Event-Listener für Cancel-Button
+   
     cancelBtn.onclick = function() {
         modal.style.display = 'none';
     };
 
-    // Event-Listener für Confirm-Button
+    
     confirmBtn.onclick = async function() {
         try {
             const response = await fetch(`/api/items/${itemId}`, {
@@ -152,7 +152,7 @@ function showDeleteConfirmation(itemId) {
         }
     };
 
-    // Schließen des Modals wenn außerhalb geklickt wird
+    
     window.onclick = function(event) {
         if (event.target === modal) {
             modal.style.display = 'none';
