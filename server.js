@@ -20,8 +20,8 @@ const upload = multer({ storage: storage });
 app.use(express.json());
 
 // Middleware für statische Dateien (CSS, JS, Bilder)
-app.use('/css', express.static(path.join(__dirname, 'assets/css')));
-app.use('/js', express.static(path.join(__dirname, 'assets/js')));
+app.use('/css', express.static(path.join(__dirname, 'css')));
+app.use('/js', express.static(path.join(__dirname, 'js')));
 app.use('/images', express.static(path.join(__dirname, 'assets/images')));
 
 // Datenbank-Setup
