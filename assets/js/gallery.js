@@ -29,7 +29,7 @@ function displayItems(items) {
         const card = document.createElement('div');
         card.className = 'item-card';
         
-        // Fallback image wenn kein Bild vorhanden
+        // Fallback image wenn kein Bild vorhandenc
         const imageSrc = item.image || '/images/default-image.jpg';
         
         // Formatiere den Preis mit 2 Dezimalstellen und Tausendertrennzeichen
