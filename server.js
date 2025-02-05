@@ -26,9 +26,9 @@ app.use('/images', express.static(path.join(__dirname, 'assets/images')));
 
 const db = new sqlite3.Database('items.db', (err) => {
     if (err) {
-        console.error('Error opening database:', err);
+        console.error('Error', err);
     } else {
-        console.log('Connected to SQLite database');
+        
         
         db.run(`CREATE TABLE IF NOT EXISTS items (
             id INTEGER PRIMARY KEY,
@@ -113,5 +113,5 @@ app.delete('/api/items/:id', (req, res) => {
 
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`Server läuft auf http://localhost:${PORT}`);
+    console.log(`http://localhost:${PORT}`);
 }); 

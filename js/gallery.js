@@ -19,7 +19,7 @@ function displayItems(items) {
     if (items.length === 0) {
         grid.innerHTML = `
             <div class="no-items">
-                <p>No items found. Add some if you want</p>
+                <p>No items</p>
             </div>
         `;
         return;

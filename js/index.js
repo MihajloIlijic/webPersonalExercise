@@ -77,7 +77,7 @@ async function resizeImage(file, maxWidth) {
                 
                 canvas.toBlob((blob) => {
                     resolve(blob);
-                }, 'image/jpeg', 0.5); 
+                }, 'image/jpeg', 1); 
             };
         };
         reader.readAsDataURL(file);

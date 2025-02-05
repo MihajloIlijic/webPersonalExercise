@@ -301,12 +301,11 @@ h1 {
     background-color: #c82333;
 }
 
-/* Zentriere den Button in der Tabellenzelle */
 td:last-child {
     text-align: center;
 }
 
-/* Modal Styles */
+
 .modal {
     display: none;
     position: fixed;
@@ -375,7 +374,7 @@ td:last-child {
     background-color: #c82333;
 }
 
-/* Modal Animations */
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
