@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function() {
     
     const itemForm = document.getElementById('itemForm');
@@ -15,6 +14,10 @@ function initializeItemsPage() {
     
     itemForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
+        // Fehlermeldung zu Beginn ausblenden
+        const errorMessage = document.getElementById('errorMessage');
+        errorMessage.style.display = 'none';
 
         const formData = new FormData();
         formData.append('name', document.getElementById('itemName').value);
@@ -35,9 +38,16 @@ function initializeItemsPage() {
             if (response.ok) {
                 e.target.reset();
                 updateTable();
+            } else {
+                // Fehlermeldung anzeigen wenn die Response nicht OK ist
+                errorMessage.textContent = 'Fehler beim Hochladen des Items. Bitte versuchen Sie es erneut.';
+                errorMessage.style.display = 'block';
             }
         } catch (error) {
             console.error('Error adding item:', error);
+            // Fehlermeldung anzeigen wenn ein Fehler auftritt
+            errorMessage.textContent = 'Ein Fehler ist aufgetreten. Bitte überprüfen Sie Ihre Internetverbindung.';
+            errorMessage.style.display = 'block';
         }
     });
 }
