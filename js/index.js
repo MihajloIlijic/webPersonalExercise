@@ -16,7 +16,6 @@ function initializeItemsPage() {
         e.preventDefault();
        
         const errorMessage = document.getElementById('errorMessage');
-        errorMessage.style.display = 'none';
 
         const formData = new FormData();
         formData.append('name', document.getElementById('itemName').value);
